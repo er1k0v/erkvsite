@@ -1,6 +1,6 @@
 # erkv
 my own website goddamit!!!!!!!!!!!
 
-[View Site](https://erkv.click/)
+[erkv.click](https://erkv.click/)
 
 use it as you want :D
