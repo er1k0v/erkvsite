@@ -149,7 +149,7 @@
     <script>
       async function fetchNowPlaying() {
         try {
-          const res = await fetch("https://proxy-erkvs-projects.vercel.app/api/nowplaying");
+          const res = await fetch("https://proxy-erkvs-projects.vercel.app/api/nowplaying", {   method: "GET",   mode: "cors" });
           const data = await res.json();
 
           const track = data.recenttracks?.track?.[0];
