@@ -147,18 +147,20 @@
       integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
       crossorigin="anonymous"></script>
     <script>
+      const username = "er1kv";
+      const apiKey = "6a807c3ca61e71d343a89a9dd55a978b";
       async function fetchNowPlaying() {
         try {
-          const res = await fetch("https://proxy-erkvs-projects.vercel.app/api/nowplaying", {   method: "GET",   mode: "cors" });
+          const res = await fetch(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${username}&api_key=${apiKey}&format=json&limit=1`);
           const data = await res.json();
 
-          const track = data.recenttracks?.track?.[0];
-          const isNowPlaying = track?.['@attr']?.nowplaying === 'true';
+          const track = data.recenttracks.track[0];
+          const isNowPlaying = track['@attr'] && track['@attr'].nowplaying === 'true';
 
           if (track && isNowPlaying) {
             document.getElementById("trackTitle").textContent = track.name;
             document.getElementById("artistName").textContent = track.artist['#text'];
-            document.getElementById("albumArt").src = track.image?.[3]?.['#text'] || "default.jpg";
+            document.getElementById("albumArt").src = track.image[3]['#text'] || "default.jpg";
           }
         } catch (err) {
           console.error("Ошибка загрузки трека:", err);
