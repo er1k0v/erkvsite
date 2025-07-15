@@ -80,12 +80,6 @@
             </div>
           </header>
           <footer class="mt-auto pt-16">
-            <!-- whoever reads this, look, i dont wanna align this by css because its really pain in the ass so ill just do that-->
-            <!-- also yes i just wanted to leave these comments because i can lol-->
-            <div class="h-4"></div>
-            <div class="h-4"></div>
-            <div class="h-4"></div>
-            <div class="h-4"></div>
             <div class="h-4"></div>
             <div class="flex flex-col items-center sm:items-start">
               <p class="text-gray-400 mb-2 text-center sm:text-left">I'm listening to:</p>
@@ -123,16 +117,34 @@
                 rel="noopener noreferrer">
                 <i class="fa-solid fa-envelope fa-xl"></i>
               </a>
+            </div>
 
+            <div class="flex flex-wrap justify-center sm:justify-start gap-6 mt-8">
               <a class="text-white hover:text-gray-300" href="https://steamcommunity.com/id/erkv1337/" target="_blank"
                 rel="noopener noreferrer">
                 <i class="fab fa-steam-symbol fa-xl"></i>
               </a>
-              <button onclick="copyDiscord()" class="text-white hover:text-gray-300" type="button"
+
+              <button onclick="copyEpicGames(this)" class="text-white hover:text-gray-300" type="button"
+                data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Copied!">
+                <img src="https://img.icons8.com/?size=100&id=44492&format=png&color=FFFFFF" class="w-6 h-6" />
+              </button>
+
+              <button onclick="copyDiscord(this)" class="text-white hover:text-gray-300" type="button"
                 class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom"
                 data-bs-content="Copied!">
                 <i class="fab fa-discord fa-xl"></i>
               </button>
+
+              <a class="text-white hover:text-gray-300" href="https://soundcloud.com/er1k0v" target="_blank"
+                rel="noopener noreferrer">
+                <i class="fa-brands fa-soundcloud"></i>
+              </a>
+
+              <a class="text-white hover:text-gray-300" href="https://myanimelist.net/profile/erkv" target="_blank"
+                rel="noopener noreferrer">
+                <i class="fa-solid fa-star"></i>
+              </a>
             </div>
           </footer>
         </div>
@@ -162,10 +174,8 @@
         try {
           const res = await fetch(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${username}&api_key=${apiKey}&format=json&limit=1`);
           const data = await res.json();
-
           const track = data.recenttracks.track[0];
           const isNowPlaying = track['@attr'] && track['@attr'].nowplaying === 'true';
-
           if (track && isNowPlaying) {
             document.getElementById("trackTitle").textContent = track.name;
             document.getElementById("artistName").textContent = track.artist['#text'];
@@ -181,29 +191,38 @@
 
       function updateTime() {
         const now = new Date();
-
         const offset = 5 * 60;
         const localTime = new Date(now.getTime() + (offset + now.getTimezoneOffset()) * 60000);
-
         const hours = localTime.getHours().toString().padStart(2, '0');
         const minutes = localTime.getMinutes().toString().padStart(2, '0');
         const seconds = localTime.getSeconds().toString().padStart(2, '0');
-
         document.getElementById("time").textContent = `My time: ${hours}:${minutes}:${seconds} (GMT+5)`;
       }
 
       updateTime();
       setInterval(updateTime, 1000);
 
-      function copyDiscord() {
+      function copyDiscord(button) {
         const nickname = "er1k0v";
         navigator.clipboard.writeText(nickname).then(() => {
-          const popoverTrigger = document.querySelector('[data-bs-toggle="popover"]');
-          const popover = bootstrap.Popover.getInstance(popoverTrigger);
-          if (popover) {
-            popover.show();
-            setTimeout(() => popover.hide(), 1000);
+          let popover = bootstrap.Popover.getInstance(button);
+          if (!popover) {
+            popover = new bootstrap.Popover(button);
           }
+          popover.show();
+          setTimeout(() => popover.hide(), 1000);
+        });
+      }
+
+      function copyEpicGames(button) {
+        const nickname = "erkv1337";
+        navigator.clipboard.writeText(nickname).then(() => {
+          let popover = bootstrap.Popover.getInstance(button);
+          if (!popover) {
+            popover = new bootstrap.Popover(button);
+          }
+          popover.show();
+          setTimeout(() => popover.hide(), 1000);
         });
       }
 
@@ -213,8 +232,6 @@
           new bootstrap.Popover(popoverTrigger);
         }
       });
-
     </script>
 </body>
-
 </html>
