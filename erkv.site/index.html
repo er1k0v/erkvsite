@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>erkv</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #000000;
+      color: #ffffff;
+    }
+
+    .popover {
+      background-color: rgba(24, 24, 27, 0.5) !important;
+      color: #fff !important;
+      border: 1px solid rgba(63, 63, 70, 0.5);
+      --bs-popover-bg: rgba(24, 24, 27, 0.5);
+      --bs-popover-border-color: rgba(24, 24, 27, 0.5);
+      backdrop-filter: blur(4px);
+      color: #fff;
+    }
+
+    .popover .popover-body {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      color: #fff !important;
+    }
+
+    .popover .popover-arrow::before,
+    .popover .popover-arrow::after {
+      border-top-color: rgba(24, 24, 27, 0.5) !important;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: url('gif.gif');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.2;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col p-8 sm:p-12 md:p-24 lg:px-32">
+  <div class="flex-grow flex items-center">
+    <div class="w-full flex justify-center">
+      <div class="w-full max-w-6xl flex flex-col md:items-center lg:flex-row md:gap-16 lg:gap-30">
+        <div class="flex-1 lg:pl-16">
+          <header class="flex items-start">
+            <div class="flex items-center space-x-4">
+
+              <div>
+                <h1 class="text-3xl font-bold">erkv1337</h1>
+                <p class="text-gray-400">this site is mine! hahahahahaha!</p>
+              </div>
+              <img alt="Profile Picture" class="h-16 w-16 max-w-full rounded-full object-cover" src="pfp.webp" />
+            </div>
+          </header>
+          <footer class="mt-auto pt-16">
+            <!-- whoever reads this, look, i dont wanna align this by css because its really pain in the ass so ill just do that-->
+            <!-- also yes i just wanted to leave these comments because i can lol-->
+            <div class="h-4"></div>
+            <div class="h-4"></div>
+            <div class="h-4"></div>
+            <div class="h-4"></div>
+            <div class="h-4"></div>
+            <div>
+              <p class="text-gray-400 mb-2">I'm listening to:</p>
+              <div class=" rounded-lg flex items-center space-x-4 max-w-xs">
+                <img id="albumArt" alt="Album Art" class="h-20 w-20 rounded-md object-cover" src="default.webp" />
+                <div class="flex flex-col justify-center">
+                  <p id="trackTitle" class="text-lg font-semibold">Im not listening to Spotify right now.</p>
+                  <p id="artistName" class="text-gray-400 text-sm"></p>
+                </div>
+              </div>
+            </div>
+            <div class="flex space-x-6 mt-8">
+              <a class="text-white hover:text-gray-300" href="https://github.com/er1k0v" target="_blank"
+                rel="noopener noreferrer">
+                <i class="fa-brands fa-github fa-xl"></i>
+              </a>
+
+              <a class="text-white hover:text-gray-300" href="https://x.com/er1k0v" target="_blank"
+                rel="noopener noreferrer">
+                <i class="fa-brands fa-twitter fa-xl"></i>
+              </a>
+
+              <a class="text-white hover:text-gray-300" href="https://www.instagram.com/itserkv/" target="_blank"
+                rel="noopener noreferrer">
+                <i class="fa-brands fa-instagram fa-xl"></i>
+              </a>
+
+              <a class="text-white hover:text-gray-300" href="https://t.me/erkv1337" target="_blank"
+                rel="noopener noreferrer">
+                <i class="fa-brands fa-telegram fa-xl"></i>
+              </a>
+
+              <a class="text-white hover:text-gray-300" href="mailto:erkv1337@gmail.com" target="_blank"
+                rel="noopener noreferrer">
+                <i class="fa-solid fa-envelope fa-xl"></i>
+              </a>
+
+              <a class="text-white hover:text-gray-300" href="https://steamcommunity.com/id/erkv1337/" target="_blank"
+                rel="noopener noreferrer">
+                <i class="fab fa-steam-symbol fa-xl"></i>
+              </a>
+              <button onclick="copyDiscord()" class="text-white hover:text-gray-300" type="button"
+                class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom"
+                data-bs-content="Copied!">
+                <i class="fab fa-discord fa-xl"></i>
+              </button>
+            </div>
+          </footer>
+        </div>
+        <main class="w-full lg:flex-1 flex justify-center items-center mt-12 lg:mt-0">
+          <section>
+            <h2 class="text-5xl md:text-6xl font-bold mb-8">about me</h2>
+            <div class="space-y-4 text-base md:text-lg text-gray-300 max-w-lg">
+              <p>My name is Erik, I'm a 17 year old goober from Kazakhstan.</p>
+              <p>Know a little bit of HTML, CSS, Python.</p>
+              <p>Birthday: 27/05</p>
+              <p>Favorite games: CS2, TF2, Fortnite, BF 2042</p>
+              <p>Languages: Russian (Native), English (B2)</p>
+              <p id="time"></p>
+              <p>PC: i5-11400F, RTX 2060 Super, 32GB DDR4, 2TB storage</p>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+      crossorigin="anonymous"></script>
+    <script>
+      async function fetchNowPlaying() {
+        try {
+          const res = await fetch("https://proxy-erkvs-projects.vercel.app/api/nowplaying");
+          const data = await res.json();
+
+          const track = data.recenttracks?.track?.[0];
+          const isNowPlaying = track?.['@attr']?.nowplaying === 'true';
+
+          if (track && isNowPlaying) {
+            document.getElementById("trackTitle").textContent = track.name;
+            document.getElementById("artistName").textContent = track.artist['#text'];
+            document.getElementById("albumArt").src = track.image?.[3]?.['#text'] || "default.jpg";
+          }
+        } catch (err) {
+          console.error("Ошибка загрузки трека:", err);
+        }
+      }
+
+      fetchNowPlaying();
+      setInterval(fetchNowPlaying, 15000);
+
+      function updateTime() {
+        const now = new Date();
+
+        const offset = 5 * 60;
+        const localTime = new Date(now.getTime() + (offset + now.getTimezoneOffset()) * 60000);
+
+        const hours = localTime.getHours().toString().padStart(2, '0');
+        const minutes = localTime.getMinutes().toString().padStart(2, '0');
+        const seconds = localTime.getSeconds().toString().padStart(2, '0');
+
+        document.getElementById("time").textContent = `My time: ${hours}:${minutes}:${seconds} (GMT+5)`;
+      }
+
+      updateTime();
+      setInterval(updateTime, 1000);
+
+      function copyDiscord() {
+        const nickname = "er1k0v";
+        navigator.clipboard.writeText(nickname).then(() => {
+          const popoverTrigger = document.querySelector('[data-bs-toggle="popover"]');
+          const popover = bootstrap.Popover.getInstance(popoverTrigger);
+          if (popover) {
+            popover.show();
+            setTimeout(() => popover.hide(), 1000);
+          }
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const popoverTrigger = document.querySelector('[data-bs-toggle="popover"]');
+        if (popoverTrigger) {
+          new bootstrap.Popover(popoverTrigger);
+        }
+      });
+
+    </script>
+</body>
+
+</html>
+
+
