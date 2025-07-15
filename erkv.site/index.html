@@ -171,6 +171,9 @@
             document.getElementById("artistName").textContent = track.artist['#text'];
             document.getElementById("albumArt").src = track.image[3]['#text'] || "default.jpg";
           }
+        } catch (err) {
+          console.error("Ошибка загрузки трека:", err);
+        }
       }
 
       fetchNowPlaying();
