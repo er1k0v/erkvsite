@@ -69,28 +69,31 @@
     <div class="w-full flex justify-center">
       <div class="w-full max-w-6xl flex flex-col md:items-center lg:flex-row md:gap-16 lg:gap-30">
         <div class="flex-1 lg:pl-16">
-          <header class="flex items-start">
-            <div class="flex items-center space-x-4">
+          <div class="w-full flex justify-center lg:justify-start">
+            <header class="bg-zinc-900/50 p-4 rounded-lg max-w-xs w-full">
+              <div class="flex items-center justify-between space-x-4">
+                <div>
+                  <h1 class="text-3xl font-bold">erkv</h1>
+                  <p class="text-gray-400 mt-1">this site is mine!</p>
+                </div>
+                <img alt="Profile Picture" class="h-16 w-16 rounded-full object-cover" src="pfp.webp" />
+              </div>
+            </header>
+          </div>
 
-              <div>
-                <h1 class="text-3xl font-bold">erkv1337</h1>
-                <p class="text-gray-400">this site is mine! hahahahahaha!</p>
-              </div>
-              <div class="relative w-16 aspect-square rounded-full overflow-hidden shrink-0">
-                <img src="pfp.webp" alt="Profile Picture" class="absolute inset-0 w-full h-full object-cover" />
-              </div>
-            </div>
-          </header>
+
           <footer class="mt-auto pt-16">
             <div class="h-4"></div>
             <div class="h-4"></div>
             <div class="flex flex-col items-center sm:items-start">
               <p class="text-gray-400 mb-2 text-center sm:text-left">I'm listening to:</p>
-              <div class="rounded-lg flex items-center space-x-4 max-w-xs">
-                <img id="albumArt" alt="Album Art" class="h-20 w-20 rounded-md object-cover" src="default.webp" />
-                <div class="flex flex-col justify-center">
-                  <p id="trackTitle" class="text-lg font-semibold">Im not listening to Spotify right now.</p>
-                  <p id="artistName" class="text-gray-400 text-sm"></p>
+              <div class="w-full flex justify-center lg:justify-start">
+                <div class="bg-zinc-900/50 p-3 rounded-lg flex items-center space-x-4 max-w-xs w-full">
+                  <img id="albumArt" alt="Album Art" class="h-20 w-20 rounded-md object-cover" src="default.webp" />
+                  <div class="flex flex-col justify-center">
+                    <p id="trackTitle" class="text-lg font-semibold">Im not listening to Spotify right now.</p>
+                    <p id="artistName" class="text-gray-400 text-sm"></p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -145,7 +148,8 @@
                 <i class="fa-solid fa-star text-xl"></i>
               </a>
             </div>
-            
+
+
           </footer>
         </div>
         <main class="w-full lg:flex-1 flex justify-center items-center mt-12 lg:mt-0">
