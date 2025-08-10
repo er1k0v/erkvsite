@@ -17,23 +17,23 @@ async function fetchNowPlaying() {
   }
 }
 
-fetchNowPlaying();
-setInterval(fetchNowPlaying, 15000);
-
 function updateTime() {
-  const now = new Date();
-  const offset = 5 * 60;
-  const localTime = new Date(now.getTime() + (offset + now.getTimezoneOffset()) * 60000);
-  const hours = localTime.getHours();
-  const minutes = localTime.getMinutes().toString().padStart(2, '0');
-  const seconds = localTime.getSeconds().toString().padStart(2, '0');
-  const timeText = `My time: ${hours.toString().padStart(2, '0')}:${minutes}:${seconds} (GMT+5)`;
+  const nowUTC = new Date();
+  let hours = nowUTC.getUTCHours() + 5;
+  let minutes = nowUTC.getUTCMinutes();
+  let seconds = nowUTC.getUTCSeconds();
+  if (hours >= 24) hours -= 24;
+  hours = String(hours).padStart(2, '0');
+  minutes = String(minutes).padStart(2, '0');
+  seconds = String(seconds).padStart(2, '0');
+
+  const timeText = `My time: ${hours}:${minutes}:${seconds} (GMT+5)`;
   document.getElementById("time-text").textContent = timeText;
-  const showMoon = hours >= 23 || hours < 6;
+  const showMoon = Number(hours) >= 23 || Number(hours) < 6;
   const moonSpan = document.getElementById("moon");
 
   if (showMoon) {
-    moonSpan.textContent = " 🌙"; 
+    moonSpan.textContent = " 🌙";
     if (!bootstrap.Popover.getInstance(moonSpan)) {
       new bootstrap.Popover(moonSpan, {
         trigger: 'hover',
@@ -47,8 +47,8 @@ function updateTime() {
   }
 }
 
-updateTime();
 setInterval(updateTime, 1000);
+updateTime();
 
 function copyToClipboard(button, text) {
   navigator.clipboard.writeText(text).then(() => {
@@ -74,4 +74,5 @@ document.addEventListener("DOMContentLoaded", function () {
   if (popoverTrigger) {
     new bootstrap.Popover(popoverTrigger);
   }
+
 });
