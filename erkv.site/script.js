@@ -16,6 +16,8 @@ async function fetchNowPlaying() {
     console.error("Ошибка загрузки трека:", err);
   }
 }
+fetchNowPlaying();
+setInterval(fetchNowPlaying, 15000);
 
 function updateTime() {
   const nowUTC = new Date();
@@ -76,3 +78,4 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 });
+
