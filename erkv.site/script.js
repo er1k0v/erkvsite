@@ -20,17 +20,28 @@ fetchNowPlaying();
 setInterval(fetchNowPlaying, 15000);
 
 function updateTime() {
-  const nowUTC = new Date();
-  let hours = nowUTC.getUTCHours() + 5;
-  let minutes = nowUTC.getUTCMinutes();
-  let seconds = nowUTC.getUTCSeconds();
-  if (hours >= 24) hours -= 24;
+  const now = new Date();
+  const utcTimestamp = Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate(),
+    now.getUTCHours(),
+    now.getUTCMinutes(),
+    now.getUTCSeconds()
+  );
+  const gmt5 = new Date(utcTimestamp + 5 * 60 * 60 * 1000);
+
+  let hours = gmt5.getUTCHours();
+  let minutes = gmt5.getUTCMinutes();
+  let seconds = gmt5.getUTCSeconds();
+
   hours = String(hours).padStart(2, '0');
   minutes = String(minutes).padStart(2, '0');
   seconds = String(seconds).padStart(2, '0');
 
   const timeText = `My time: ${hours}:${minutes}:${seconds} (GMT+5)`;
   document.getElementById("time-text").textContent = timeText;
+
   const showMoon = Number(hours) >= 23 || Number(hours) < 6;
   const moonSpan = document.getElementById("moon");
 
@@ -78,4 +89,5 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 });
+
 
