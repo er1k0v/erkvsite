@@ -19,44 +19,35 @@ async function fetchNowPlaying() {
 fetchNowPlaying();
 setInterval(fetchNowPlaying, 15000);
 
-function updateTime() {
-  const now = new Date();
-  const utcTimestamp = Date.UTC(
-    now.getUTCFullYear(),
-    now.getUTCMonth(),
-    now.getUTCDate(),
-    now.getUTCHours(),
-    now.getUTCMinutes(),
-    now.getUTCSeconds()
-  );
-  const gmt5 = new Date(utcTimestamp + 5 * 60 * 60 * 1000);
+async function updateTime() {
+  try {
+    const res = await fetch("https://worldtimeapi.org/api/timezone/Etc/GMT-5", { cache: "no-store" });
+    const data = await res.json();
+    const date = new Date(data.utc_datetime);
+    date.setUTCHours(date.getUTCHours() + 5);
 
-  let hours = gmt5.getUTCHours();
-  let minutes = gmt5.getUTCMinutes();
-  let seconds = gmt5.getUTCSeconds();
+    const hours = String(date.getUTCHours()).padStart(2, "0");
+    const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+    const seconds = String(date.getUTCSeconds()).padStart(2, "0");
 
-  hours = String(hours).padStart(2, '0');
-  minutes = String(minutes).padStart(2, '0');
-  seconds = String(seconds).padStart(2, '0');
+    const timeText = `My time: ${hours}:${minutes}:${seconds} (GMT+5)`;
+    document.getElementById("time-text").textContent = timeText;
 
-  const timeText = `My time: ${hours}:${minutes}:${seconds} (GMT+5)`;
-  document.getElementById("time-text").textContent = timeText;
+    const showMoon = Number(hours) >= 23 || Number(hours) < 6;
+    const moonSpan = document.getElementById("moon");
 
-  const showMoon = Number(hours) >= 23 || Number(hours) < 6;
-  const moonSpan = document.getElementById("moon");
-
-  if (showMoon) {
-    moonSpan.textContent = " 🌙";
-    if (!bootstrap.Popover.getInstance(moonSpan)) {
-      new bootstrap.Popover(moonSpan, {
-        trigger: 'hover',
-        placement: 'top'
-      });
+    if (showMoon) {
+      moonSpan.textContent = " 🌙";
+      if (!bootstrap.Popover.getInstance(moonSpan)) {
+        new bootstrap.Popover(moonSpan, { trigger: 'hover', placement: 'top' });
+      }
+    } else {
+      moonSpan.textContent = "";
+      const existing = bootstrap.Popover.getInstance(moonSpan);
+      if (existing) existing.dispose();
     }
-  } else {
-    moonSpan.textContent = "";
-    const existing = bootstrap.Popover.getInstance(moonSpan);
-    if (existing) existing.dispose();
+  } catch (e) {
+    console.error("Ошибка получения времени:", e);
   }
 }
 
@@ -89,5 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 });
+
 
 
