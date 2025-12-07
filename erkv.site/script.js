@@ -1,65 +1,101 @@
+// =========================
+//  now playin (plz dont forget to change api)
+// =========================
+
 const username = "er1kv";
 const apiKey = "6a807c3ca61e71d343a89a9dd55a978b";
 
 async function fetchNowPlaying() {
   try {
-    const res = await fetch(`https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${username}&api_key=${apiKey}&format=json&limit=1`);
+    const res = await fetch(
+      `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${username}&api_key=${apiKey}&format=json&limit=1`
+    );
     const data = await res.json();
     const track = data.recenttracks.track[0];
-    const isNowPlaying = track['@attr'] && track['@attr'].nowplaying === 'true';
+    const isNowPlaying = track["@attr"] && track["@attr"].nowplaying === "true";
+
     if (track && isNowPlaying) {
       document.getElementById("trackTitle").textContent = track.name;
-      document.getElementById("artistName").textContent = track.artist['#text'];
-      document.getElementById("albumArt").src = track.image[3]['#text'] || "default.jpg";
+      document.getElementById("artistName").textContent = track.artist["#text"];
+
+      const albumImg = track.image[3]["#text"] || "default.jpg";
+      document.getElementById("albumArt").src = albumImg;
     }
   } catch (err) {
-    console.error("Ошибка загрузки трека:", err);
+    console.error("ошибка загрузки трека:", err);
   }
 }
+
 fetchNowPlaying();
 setInterval(fetchNowPlaying, 15000);
 
-async function updateTime() {
-  try {
-    const res = await fetch("https://worldtimeapi.org/api/timezone/Etc/GMT-5", { cache: "no-store" });
-    const data = await res.json();
-    const date = new Date(data.utc_datetime);
-    date.setUTCHours(date.getUTCHours() + 5);
 
-    const hours = String(date.getUTCHours()).padStart(2, "0");
-    const minutes = String(date.getUTCMinutes()).padStart(2, "0");
-    const seconds = String(date.getUTCSeconds()).padStart(2, "0");
+// =========================
+//  phrase generator 3000
+// =========================
 
-    const timeText = `My time: ${hours}:${minutes}:${seconds} (GMT+5)`;
-    document.getElementById("time-text").textContent = timeText;
+document.addEventListener("DOMContentLoaded", () => {
+  const phrases = [
+    "this site is mine!",
+    "helloooooooooo 👀",
+    "enjoy your stay :3",
+    "made with love <3",
+    "bongos binted?",
+    "ken carson fan",
+    "[>::<]"
+  ];
 
-    const showMoon = Number(hours) >= 23 || Number(hours) < 6;
-    const moonSpan = document.getElementById("moon");
+  const subtitle = document.getElementById("funnything");
+  const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
 
-    if (showMoon) {
-      moonSpan.textContent = " 🌙";
-      if (!bootstrap.Popover.getInstance(moonSpan)) {
-        new bootstrap.Popover(moonSpan, { trigger: 'hover', placement: 'top' });
-      }
-    } else {
-      moonSpan.textContent = "";
-      const existing = bootstrap.Popover.getInstance(moonSpan);
-      if (existing) existing.dispose();
+  if (subtitle) subtitle.textContent = randomPhrase;
+});
+
+
+// =========================
+//  my time
+// =========================
+
+function updateTime() {
+  const now = new Date();
+  const hours = (now.getUTCHours() + 5) % 24;
+  const minutes = now.getMinutes().toString().padStart(2, "0");
+  const seconds = now.getSeconds().toString().padStart(2, "0");
+
+  document.getElementById("time-text").textContent =
+    `My time: ${hours.toString().padStart(2, "0")}:${minutes}:${seconds} [GMT+5]`;
+
+  const moon = document.getElementById("moon");
+  const isSleep = hours >= 23 || hours < 6;
+
+  if (isSleep) {
+    moon.textContent = " 🌙";
+
+    if (!bootstrap.Popover.getInstance(moon)) {
+      new bootstrap.Popover(moon, {
+        trigger: "hover",
+        placement: "top"
+      });
     }
-  } catch (e) {
-    console.error("Ошибка получения времени:", e);
+  } else {
+    moon.textContent = "";
+    const inst = bootstrap.Popover.getInstance(moon);
+    if (inst) inst.dispose();
   }
 }
 
-setInterval(updateTime, 1000);
 updateTime();
+setInterval(updateTime, 1000);
+
+
+// =========================
+//  сlick-to-copy
+// =========================
 
 function copyToClipboard(button, text) {
   navigator.clipboard.writeText(text).then(() => {
     let popover = bootstrap.Popover.getInstance(button);
-    if (!popover) {
-      popover = new bootstrap.Popover(button);
-    }
+    if (!popover) popover = new bootstrap.Popover(button);
     popover.show();
     setTimeout(() => popover.hide(), 1000);
   });
@@ -73,13 +109,8 @@ function copyEpicGames(button) {
   copyToClipboard(button, "erkv1337");
 }
 
+
 document.addEventListener("DOMContentLoaded", function () {
-  const popoverTrigger = document.querySelector('[data-bs-toggle="popover"]');
-  if (popoverTrigger) {
-    new bootstrap.Popover(popoverTrigger);
-  }
-
+  const popoverTrigger = document.querySelector("[data-bs-toggle='popover']");
+  if (popoverTrigger) new bootstrap.Popover(popoverTrigger);
 });
-
-
-
