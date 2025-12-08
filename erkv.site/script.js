@@ -4,6 +4,9 @@
 
 const username = "er1kv";
 const apiKey = "6a807c3ca61e71d343a89a9dd55a978b";
+const albumArt = document.getElementById('albumArt');
+const trackTitle = document.getElementById("trackTitle");
+const artistName = document.getElementById("artistName");
 
 async function fetchNowPlaying() {
   try {
@@ -15,14 +18,27 @@ async function fetchNowPlaying() {
     const isNowPlaying = track["@attr"] && track["@attr"].nowplaying === "true";
 
     if (track && isNowPlaying) {
-      document.getElementById("trackTitle").textContent = track.name;
-      document.getElementById("artistName").textContent = track.artist["#text"];
+      trackTitle.textContent = track.name;
+      artistName.textContent = track.artist["#text"];
 
-      const albumImg = track.image[3]["#text"] || "default.jpg";
-      document.getElementById("albumArt").src = albumImg;
+      let imageUrl = track.image?.[3]['#text'];
+      if (!imageUrl) imageUrl = 'default.webp';
+
+      albumArt.src = imageUrl;
+
+      albumArt.onerror = () => {
+        albumArt.src = 'default.webp';
+      };
+    } else {
+      trackTitle.textContent = "I'm not listening to music right now.";
+      artistName.textContent = "";
+      albumArt.src = 'default.webp';
     }
   } catch (err) {
     console.error("ошибка загрузки трека:", err);
+    trackTitle.textContent = "I'm not listening to music right now.";
+    artistName.textContent = "";
+    albumArt.src = 'default.webp';
   }
 }
 
@@ -114,3 +130,4 @@ document.addEventListener("DOMContentLoaded", function () {
   const popoverTrigger = document.querySelector("[data-bs-toggle='popover']");
   if (popoverTrigger) new bootstrap.Popover(popoverTrigger);
 });
+
