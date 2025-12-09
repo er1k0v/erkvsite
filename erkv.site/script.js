@@ -1,12 +1,16 @@
 // =========================
-//  now playin (plz dont forget to change api)
+//  now playin (dont forget to change api)
 // =========================
-
 const username = "er1kv";
 const apiKey = "6a807c3ca61e71d343a89a9dd55a978b";
 const albumArt = document.getElementById('albumArt');
 const trackTitle = document.getElementById("trackTitle");
 const artistName = document.getElementById("artistName");
+function setDefaultText() {
+  trackTitle.textContent = "I'm not listening to music right now.";
+  artistName.textContent = "";
+  albumArt.src = "default.webp";
+}
 
 async function fetchNowPlaying() {
   try {
@@ -30,21 +34,16 @@ async function fetchNowPlaying() {
         albumArt.src = 'default.webp';
       };
     } else {
-      trackTitle.textContent = "I'm not listening to music right now.";
-      artistName.textContent = "";
-      albumArt.src = 'default.webp';
+      setDefaultText();
     }
   } catch (err) {
     console.error("ошибка загрузки трека:", err);
-    trackTitle.textContent = "I'm not listening to music right now.";
-    artistName.textContent = "";
-    albumArt.src = 'default.webp';
+    setDefaultText();
   }
 }
 
 fetchNowPlaying();
 setInterval(fetchNowPlaying, 15000);
-
 
 // =========================
 //  phrase generator 3000
@@ -60,10 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "ken carson fan",
     "[>::<]"
   ];
-
   const subtitle = document.getElementById("funnything");
   const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-
   if (subtitle) subtitle.textContent = randomPhrase;
 });
 
@@ -77,16 +74,13 @@ function updateTime() {
   const hours = (now.getUTCHours() + 5) % 24;
   const minutes = now.getMinutes().toString().padStart(2, "0");
   const seconds = now.getSeconds().toString().padStart(2, "0");
-
   document.getElementById("time-text").textContent =
     `My time: ${hours.toString().padStart(2, "0")}:${minutes}:${seconds} [GMT+5]`;
-
   const moon = document.getElementById("moon");
   const isSleep = hours >= 23 || hours < 6;
 
   if (isSleep) {
     moon.textContent = " 🌙";
-
     if (!bootstrap.Popover.getInstance(moon)) {
       new bootstrap.Popover(moon, {
         trigger: "hover",
@@ -102,7 +96,6 @@ function updateTime() {
 
 updateTime();
 setInterval(updateTime, 1000);
-
 
 // =========================
 //  сlick-to-copy
@@ -125,9 +118,7 @@ function copyEpicGames(button) {
   copyToClipboard(button, "erkv1337");
 }
 
-
 document.addEventListener("DOMContentLoaded", function () {
   const popoverTrigger = document.querySelector("[data-bs-toggle='popover']");
   if (popoverTrigger) new bootstrap.Popover(popoverTrigger);
 });
-
